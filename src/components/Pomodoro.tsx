@@ -1,78 +1,37 @@
-import React, { useEffect, useState } from "react";
+import { useTime } from "@/context/timeContext";
 import { Button } from "./ui/button";
-import { Card } from "./ui/card";
 
 export default function Pomodoro() {
-  const [minutes, setMinutes] = useState(25);
-  const [seconds, setSeconds] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const [displayMessage, setDisplayMessage] = useState(false);
-
-  const reset = () => {
-    setMinutes(25);
-    setSeconds(0);
-  };
-
-  const paused = () => {
-    setIsPaused((isPaused) => !isPaused);
-  };
-
-  const shortBreak = () => {
-    setIsPaused(false);
-    setMinutes(5);
-    setSeconds(0);
-  };
-
-  useEffect(() => {
-    let interval = null;
-
-    if (seconds === 0 && minutes === 0) {
-      setIsPaused(true);
-    }
-
-    if (!isPaused) {
-      interval = setInterval(() => {
-        if (seconds === 0) {
-          if (minutes !== 0) {
-            setSeconds(59);
-            setMinutes(minutes - 1);
-          } else {
-            let newMinutes = displayMessage ? 24 : 4;
-            setSeconds(59);
-            setMinutes(newMinutes);
-            setDisplayMessage(!displayMessage);
-          }
-        } else {
-          setSeconds((seconds) => seconds - 1);
-        }
-      }, 1000);
-    }
-
-    return () => clearInterval(interval);
-  }, [displayMessage, isPaused, minutes, seconds]);
-
-  const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
-  const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
-
+  const { timerMinutes, timerSeconds, isPaused, reset, shortBreak, paused } =
+    useTime();
   return (
-    <div className="h-full p-8 py-12 items-center flex flex-col w-full max-w-xl text-white">
-      <div className="text-[350px] text-yellow-300 font-extrabold leading-[1.2] ">
+    <div className="h-full p-8 py-12 items-center flex flex-col w-full max-w-xl text-white ">
+      <div className="text-[20vw] text-yellow-300 font-extrabold leading-[0.9] ">
         {timerMinutes}:{timerSeconds}
       </div>
-      {/* <div className="grid grid-cols-3 gap-3 w-full max-w-md text-yellow-400 pt-10">
-        <Button className="bg-[#222222] text-[#f1fa8c] py-6" onClick={paused}>
+      <div
+        className="w-fit  gap-4  items-center grid grid-cols-3 max-sm:grid-cols-2 
+      justify-center rounded-full h-16 px-12 mt-5 text-[#F8F8F2] shadow mx-auto"
+      >
+        <Button
+          className="bg-[#222222] text-[#f1fa8c] p-6 max-w-xl w-full"
+          onClick={paused}
+        >
           {isPaused ? "Start" : "Pause"}
         </Button>
-        <Button className="bg-[#222222] text-[#f1fa8c] py-6" onClick={reset}>
+        <Button
+          className="bg-[#222222] text-[#f1fa8c] p-6 max-w-xl w-full"
+          onClick={reset}
+        >
           Reset Pomodoro
         </Button>
         <Button
-          className="bg-[#222222] text-[#f1fa8c] py-6"
+          className="bg-[#222222] text-[#f1fa8c] p-6 max-w-xl w-full"
           onClick={shortBreak}
         >
           Short break
         </Button>
-      </div> */}
+      </div>
     </div>
   );
 }

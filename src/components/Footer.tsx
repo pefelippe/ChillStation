@@ -23,9 +23,9 @@ function Footer() {
   };
 
   return (
-    <div className="w-full fixed  bottom-0  py-20 ">
-      <div className="w-fit bg-[#222222] h-20 items-center flex justify-center rounded-full p-6 text-[#F8F8F2] shadow mx-auto">
-        <div className="grid grid-cols-3 gap-4 w-full max-w-md text-yellow-400 ">
+    <div className="w-full  ">
+      <div className="w-fit bg-[#222222] h-16 items-center flex justify-center rounded-full p-6 text-[#F8F8F2] shadow mx-auto">
+        <div className="grid grid-cols-3 gap-3 w-full max-w-sm text-yellow-400 ">
           <Button className="bg-[#222222] text-[#f1fa8c] py-6" onClick={paused}>
             {isPaused ? "Start" : "Pause"}
           </Button>
